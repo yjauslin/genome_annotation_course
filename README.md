@@ -16,5 +16,5 @@ Please be aware that you may need to change some of the file paths to fit your f
 
 Below you can find a list with all the tools used during the assemblies including their versions in the parentheses. While newer versions may be able to accomplish the same results, an errorfree analysis cannot be guaranteed.
 
-- **[EDTA (v2.2)](https://github.com/oushujun/EDTA)**
+- **[EDTA (v2.2.2)](https://github.com/oushujun/EDTA)**
 - **[XXX (v1.0.0)](XXX)**
