@@ -9,12 +9,13 @@ Please be aware that you may need to change some of the file paths to fit your f
 ## Structure
 
 ### Scripts/
-- **[01_runEDTA.sh](scripts/01_runEDTA.sh)**:             annotates transposable elements using EDTA
-- **[02_](scripts/02_)**:               XXX
+- **[01_runEDTA.sh](scripts/01_runEDTA.sh)**:             Annotates transposable elements using EDTA.
+- **[02_sortTE](scripts/02_sortTE.sh)**:                  Refines TE classification and split them into clades using TEsorter.
 
 ## Dependencies
 
 Below you can find a list with all the tools used during the assemblies including their versions in the parentheses. While newer versions may be able to accomplish the same results, an errorfree analysis cannot be guaranteed.
 
 - **[EDTA (v2.2.2)](https://github.com/oushujun/EDTA)**
+- **[TEsorter (v1.3.0)](https://github.com/zhangrengang/TEsorter)**
 - **[XXX (v1.0.0)](XXX)**
