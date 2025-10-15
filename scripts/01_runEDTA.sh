@@ -1,8 +1,8 @@
 #!/bin/bash 
 #SBATCH --job-name=EDTA            # e.g. TE_annotation 
 #SBATCH --partition=pibu_el8           # IBU cluster partition 
-#SBATCH --cpus-per-task=20          # e.g. 20 
-#SBATCH --mem=64                      # e.g. 64G or 200G 
+#SBATCH --cpus-per-task=40          # e.g. 20 
+#SBATCH --mem=200G                      # e.g. 64G or 200G 
 #SBATCH --time=0-24:00:00                    # format D-HH:MM, e.g. 2-00:00 
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/EDTA_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/EDTA_%j.err 
