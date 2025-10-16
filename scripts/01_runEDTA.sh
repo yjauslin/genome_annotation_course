@@ -21,4 +21,5 @@ apptainer exec --bind /data $CONTAINER EDTA.pl --genome $GENOME \
     --sensitive 1 \
     --cds "/data/courses/assembly-annotation-course/CDS_annotation/data/TAIR10_cds_20110103_representative_gene_model_updated" \
     --anno 1 \
-    --threads $SLURM_CPUS_PER_TASK
+    --threads $SLURM_CPUS_PER_TASK \
+    --force 1
