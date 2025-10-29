@@ -18,4 +18,7 @@ Below you can find a list with all the tools used during the assemblies includin
 
 - **[EDTA (v2.2.2)](https://github.com/oushujun/EDTA)**
 - **[TEsorter (v1.3.0)](https://github.com/zhangrengang/TEsorter)**
+- **[Maker (v3.01.03)](https://hpc.nih.gov/apps/maker.html)**
+- **[OpenMPI (v4.1.1)](https://www.open-mpi.org)**
+- **[AUGUSTUS (v3.4.0)](https://github.com/Gaius-Augustus/Augustus)**
 - **[XXX (v1.0.0)](XXX)**
