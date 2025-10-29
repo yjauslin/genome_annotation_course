@@ -12,11 +12,11 @@ Please be aware that you may need to change some of the file paths to fit your f
 - **[01_runEDTA.sh](scripts/01_runEDTA.sh)**:             Annotates transposable elements using EDTA.
 - **[02_sortTE](scripts/02_sortTE.sh)**:                  Refines TE classification and split them into clades using TEsorter.
 - **[03_runTESorter.sh](scripts/03_runTESorter.sh)**:
-- **[04_createControlFileMaker.sh](scripts/04_createControlFileMaker.sh)**:
-- **[05-parseRM.pl](scripts/05-parseRM.pl)**:
-- **[05_runMaker.sh](scripts/05_runMaker.sh)**:
-- **[06_TEDating.sh](scripts/06_TEDating.sh)**:
-
+- **[04_TEDating.sh](scripts/06_TEDating.sh)**:
+- **[04-parseRM.pl](scripts/05-parseRM.pl)**:
+- **[05_createControlFileMaker.sh](scripts/04_createControlFileMaker.sh)**:
+- **[06_runMaker.sh](scripts/05_runMaker.sh)**:
+  
 ## Dependencies
 
 Below you can find a list with all the tools used during the assemblies including their versions in the parentheses. While newer versions may be able to accomplish the same results, an errorfree analysis cannot be guaranteed.
