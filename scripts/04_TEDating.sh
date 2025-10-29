@@ -14,4 +14,4 @@ INPUT=/data/users/${USER}/genome_annotation_course/results/EDTA_annotation/ERR11
 cd /data/users/${USER}/genome_annotation_course/results/TE_classification
 
 module add BioPerl/1.7.8-GCCcore-10.3.0
-perl /data/users/${USER}/genome_annotation_course/scripts/05-parseRM.pl -i $INPUT -l 50,1 -v
+perl /data/users/${USER}/genome_annotation_course/scripts/04-parseRM.pl -i $INPUT -l 50,1 -v
