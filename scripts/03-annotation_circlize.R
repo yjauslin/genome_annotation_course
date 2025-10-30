@@ -41,7 +41,7 @@ filter_superfamily <- function(gff_data, superfamily, custom_ideogram) {
     return(filtered_data)
 }
 
-pdf("02-TE_density.pdf", width = 10, height = 10)
+pdf("plots/02-TE_density.pdf", width = 10, height = 10)
 gaps <- c(rep(1, length(custom_ideogram$chr) - 1), 5) # Add a gap between scaffolds, more gap for the last scaffold
 circos.par(start.degree = 90, gap.after = 1, track.margin = c(0, 0), gap.degree = gaps)
 # Initialize the circos plot with the custom ideogram
@@ -141,7 +141,7 @@ filter_clades <- function(new_data, clade, custom_ideogram) {
   return(filtered_data)
 }
 
-pdf("02-TE_density_clades.pdf", width = 10, height = 10)
+pdf("plots/02-TE_density_clades.pdf", width = 10, height = 10)
 gaps <- c(rep(1, length(custom_ideogram$chr) - 1), 5) # Add a gap between scaffolds, more gap for the last scaffold
 circos.par(start.degree = 90, gap.after = 1, track.margin = c(0, 0), gap.degree = gaps)
 # Initialize the circos plot with the custom ideogram
