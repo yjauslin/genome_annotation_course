@@ -51,7 +51,7 @@ ggplot(rep_table.m, aes(fill = fam, x = distance, weight = value / 1000000)) +
   ylab("Sequence (Mbp)") +
   theme(axis.text.x = element_text(angle = 90, vjust = 1, size = 9, hjust = 1), plot.title = element_text(hjust = 0.5))
 
-ggsave(filename = "Plots/output.pdf", width = 10, height = 5, useDingbats = F)
+ggsave(filename = "Plots/04_te_landscape_plot.pdf", width = 10, height = 5, useDingbats = F)
 
 
 
