@@ -4,7 +4,7 @@ args <-commandArgs(trailingOnly = TRUE)
 # get the folder where the genespace workingDirectory is located
 wd <- args[1]
 
-gpar <- init_genespace(wd = wd, path2mcscanx = "/usr/local/bin/MCScanX")
+gpar <- init_genespace(wd = wd, path2mcscanx = "/usr/local/bin")
 
 # run genespace
 out <- run_genespace(gpar, overwrite = TRUE)
