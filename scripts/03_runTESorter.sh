@@ -7,6 +7,7 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/TEsorter_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/TEsorter_%j.err 
 
+#save important directories as variables
 WORKDIR=/data/users/${USER}/genome_annotation_course 
 CONTAINER=/data/courses/assembly-annotation-course/CDS_annotation/containers/TEsorter_1.3.0.sif
 GENOME=/data/users/${USER}/genome_annotation_course/results/EDTA_annotation/ERR11437318.bp.p_ctg.fa.mod.EDTA.TElib.fa

@@ -7,15 +7,20 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/sortTE_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/sortTE_%j.err 
 
+#save important directories as variables
 WORKDIR=/data/users/${USER}/genome_annotation_course 
 CONTAINER=/data/courses/assembly-annotation-course/CDS_annotation/containers/TEsorter_1.3.0.sif
 OUTDIR=${WORKDIR}/results/TE_classification
 
+#save result-file of EDTA as variable
 gff=${WORKDIR}/results/EDTA_annotation/ERR11437318.bp.p_ctg.fa.mod.EDTA.raw/ERR11437318.bp.p_ctg.fa.mod.LTR.raw.fa
 
+#create outdir
 mkdir -p $OUTDIR
 
+#move to outdir
 cd $OUTDIR
 
+#run TEsorter
 apptainer exec --bind $WORKDIR $CONTAINER TEsorter $gff  \
     -db rexdb-plant
