@@ -9,8 +9,6 @@
 
 # Define paths to BUSCO output directories (not the JSON files)
 WORKDIR="/data/users/${USER}/genome_annotation_course/results/final"
-PROT_DIR="$WORKDIR/busco_output_proteins"
-
 
 cd /data/users/yjauslin/genome_annotation_course/results/final/
 
@@ -53,5 +51,5 @@ cd $WORKDIR
 
 # Generate plot
 mkdir -p combined_summaries
-cp $PROT_DIR/short_summary*.txt combined_summaries/
+cp $WORKDIR/short_summary*.txt combined_summaries/
 generate_plot.py -wd combined_summaries/
