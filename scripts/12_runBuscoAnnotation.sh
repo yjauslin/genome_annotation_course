@@ -7,7 +7,11 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/busco_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/busco_%j.err
 
-PLOT_DIR=/data/users/yjauslin/genome_annotation_course/plots
+# Define paths to BUSCO output directories (not the JSON files)
+WORKDIR="/data/users/${USER}/genome_annotation_course/results/final"
+PROT_DIR="$WORKDIR/busco_output_proteins/"
+TRANS_DIR="$WORKDIR/busco_output_transcripts"
+
 
 cd /data/users/yjauslin/genome_annotation_course/results/final/
 
@@ -44,4 +48,12 @@ END {
     for (g in seq) print seq[g]
 }' "$protein" > "assembly.all.maker.proteins.renamed.filtered.longest.fasta"
 
-busco -i assembly.all.maker.proteins.renamed.filtered.longest.fasta -l brassicales_odb10 -o busco_output -m proteins -f --plot $PLOT_DIR --plot_percentages
+busco -i assembly.all.maker.proteins.renamed.filtered.longest.fasta -l brassicales_odb10 -o busco_output -m proteins -f
+ 
+cd $WORKDIR
+
+# Generate combined plot
+mkdir -p combined_summaries
+cp $PROT_DIR/short_summary*.txt combined_summaries/
+cp $TRANS_DIR/short_summary*.txt combined_summaries/
+generate_plot.py -wd combined_summaries/
