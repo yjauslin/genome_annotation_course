@@ -46,11 +46,12 @@ END {
     for (g in seq) print seq[g]
 }' "$protein" > "assembly.all.maker.proteins.renamed.filtered.longest.fasta"
 
+#run busco with mode proteins
 busco -i assembly.all.maker.proteins.renamed.filtered.longest.fasta -l brassicales_odb10 -o busco_output -m proteins -f
  
 cd $WORKDIR
 
-# Generate combined plot
+# Generate plot
 mkdir -p combined_summaries
 cp $PROT_DIR/short_summary*.txt combined_summaries/
 generate_plot.py -wd combined_summaries/
