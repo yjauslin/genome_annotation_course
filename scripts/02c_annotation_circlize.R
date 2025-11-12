@@ -8,6 +8,16 @@ library(dplyr)
 gff_file <- "ERR11437318.bp.p_ctg.fa.mod.EDTA.TEanno.gff3"
 gff_data <- read.table(gff_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
 
+gene_annotation_file <- "filtered.genes.renamed.gff3"
+gene_annotation <- read.table(gene_annotation_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+
+# Swap coordinates where end larger than start
+gene_annotation <- gene_annotation %>%
+  mutate(
+    start = pmin(V4, V5),
+    end   = pmax(V4, V5)
+  )
+
 # Check the superfamilies present in the GFF3 file, and their counts
 gff_data$V3 %>% table()
 
@@ -41,7 +51,7 @@ filter_superfamily <- function(gff_data, superfamily, custom_ideogram) {
     return(filtered_data)
 }
 
-pdf("plots/02_TE_density.pdf", width = 10, height = 10)
+pdf("plots/02-TE_density.pdf", width = 12, height = 12)
 gaps <- c(rep(1, length(custom_ideogram$chr) - 1), 5) # Add a gap between scaffolds, more gap for the last scaffold
 circos.par(start.degree = 90, gap.after = 1, track.margin = c(0, 0), gap.degree = gaps)
 # Initialize the circos plot with the custom ideogram
@@ -62,13 +72,13 @@ colors <- c(
   "yellow",
   "brown",
   "black",
+  "darkgreen",
   "pink",
   "gray",
   "navy",
-  "darkgreen",
   "gold")
 
-superfamilies = unique(gff_data$V3)
+superfamilies <- unique(gff_data$V3)
 superfamilies <- superfamilies[!superfamilies %in% c("helitron", "long_terminal_repeat", "repeat_fragment", "repeat_region", "target_site_duplication", "Tc1_Mariner_TIR_transposon")]
 
 
@@ -85,11 +95,20 @@ for (i in seq_along(superfamilies)) {
   )
 }
 
+circos.genomicDensity(
+  filter_superfamily(gene_annotation, "gene", custom_ideogram),
+  count_by = "number",
+  col = "darkgreen",
+  track.height = 0.07,
+  window.size = 1e5
+)
+
+
 circos.clear()
 
 lgd <- Legend(
-    title = "Superfamily", at = superfamilies,
-    legend_gp = gpar(fill = colors[1:10])
+    title = "Superfamily", at = c(superfamilies, "genes"),
+    legend_gp = gpar(fill = colors[1:11])
 )
 draw(lgd, x = unit(1, "cm"), y = unit(1, "cm"), just = c("left", "bottom"))
 
@@ -141,7 +160,7 @@ filter_clades <- function(new_data, clade, custom_ideogram) {
   return(filtered_data)
 }
 
-pdf("plots/02_TE_density_clades.pdf", width = 10, height = 10)
+pdf("plots/02-TE_density_clades.pdf", width = 10, height = 10)
 gaps <- c(rep(1, length(custom_ideogram$chr) - 1), 5) # Add a gap between scaffolds, more gap for the last scaffold
 circos.par(start.degree = 90, gap.after = 1, track.margin = c(0, 0), gap.degree = gaps)
 # Initialize the circos plot with the custom ideogram
