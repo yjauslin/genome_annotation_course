@@ -45,11 +45,15 @@ END {
 }' "$protein" > "assembly.all.maker.proteins.renamed.filtered.longest.fasta"
 
 #run busco with mode proteins
-busco -i assembly.all.maker.proteins.renamed.filtered.longest.fasta -l brassicales_odb10 -o busco_output -m proteins -f
+busco -i assembly.all.maker.proteins.renamed.filtered.longest.fasta -l brassicales_odb10 -o busco_output -m proteins
  
 cd $WORKDIR
 
-# Generate plot
+#create result directory for the plot
 mkdir -p combined_summaries
-cp $WORKDIR/short_summary*.txt combined_summaries/
+
+#copy input file into result directory
+cp $WORKDIR/busco_output/short_summary.specific.brassicales_odb10.busco_output.txt combined_summaries/
+
+#generate busco plot
 generate_plot.py -wd combined_summaries/
