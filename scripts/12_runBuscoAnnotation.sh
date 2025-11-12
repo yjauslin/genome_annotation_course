@@ -1,16 +1,15 @@
 #!/bin/bash 
 #SBATCH --job-name=busco          # e.g. TE_annotation 
-#SBATCH --partition=pshort_el8           # IBU cluster partition 
+#SBATCH --partition=pibu_el8           # IBU cluster partition 
 #SBATCH --cpus-per-task=20          # e.g. 20 
 #SBATCH --mem=64G                      # e.g. 64G or 200G 
-#SBATCH --time=0-02:00:00                    # format D-HH:MM, e.g. 2-00:00 
+#SBATCH --time=0-04:00:00                    # format D-HH:MM, e.g. 2-00:00 
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/busco_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/busco_%j.err
 
 # Define paths to BUSCO output directories (not the JSON files)
 WORKDIR="/data/users/${USER}/genome_annotation_course/results/final"
-PROT_DIR="$WORKDIR/busco_output_proteins/"
-TRANS_DIR="$WORKDIR/busco_output_transcripts"
+PROT_DIR="$WORKDIR/busco_output_proteins"
 
 
 cd /data/users/yjauslin/genome_annotation_course/results/final/
@@ -18,11 +17,10 @@ cd /data/users/yjauslin/genome_annotation_course/results/final/
 module load BUSCO/5.4.2-foss-2021a
 module load SAMtools/1.13-GCC-10.3.0
 
-# Define file names - ADJUST THESE based on what files actually exist
+#Define file names
 protein="assembly.all.maker.proteins.renamed.filtered.fasta"
-transcript="assembly.all.maker.transcripts.renamed.filtered.fasta"
 
-# Extract Longest Protein Isoforms
+#Extract Longest Protein Isoforms
 awk '/^>/ {
     if (seqlen > maxlen[gene]) {
         maxlen[gene] = seqlen
@@ -55,5 +53,4 @@ cd $WORKDIR
 # Generate combined plot
 mkdir -p combined_summaries
 cp $PROT_DIR/short_summary*.txt combined_summaries/
-cp $TRANS_DIR/short_summary*.txt combined_summaries/
 generate_plot.py -wd combined_summaries/
