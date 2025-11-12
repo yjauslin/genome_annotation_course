@@ -7,6 +7,7 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/busco_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/busco_%j.err
 
+PLOT_DIR=/data/users/yjauslin/genome_annotation_course/plots
 
 cd /data/users/yjauslin/genome_annotation_course/results/final/
 
@@ -43,4 +44,4 @@ END {
     for (g in seq) print seq[g]
 }' "$protein" > "assembly.all.maker.proteins.renamed.filtered.longest.fasta"
 
-busco -i assembly.all.maker.proteins.renamed.filtered.longest.fasta -l brassicales_odb10 -o busco_output -m proteins
+busco -i assembly.all.maker.proteins.renamed.filtered.longest.fasta -l brassicales_odb10 -o busco_output -m proteins -f --plot $PLOT_DIR --plot_percentages
