@@ -39,7 +39,7 @@ custom_ideogram <- custom_ideogram[order(custom_ideogram$end, decreasing = T), ]
 sum(custom_ideogram$end[1:20])
 
 # Select only the first 20 longest scaffolds, You can reduce this number if you have longer chromosome scale scaffolds
-custom_ideogram <- custom_ideogram[1:10, ]
+custom_ideogram <- custom_ideogram[1:9, ]
 
 # Function to filter GFF3 data based on Superfamily (You need one track per Superfamily)
 filter_superfamily <- function(gff_data, superfamily, custom_ideogram) {
@@ -79,7 +79,7 @@ colors <- c(
   "gold")
 
 superfamilies <- unique(gff_data$V3)
-superfamilies <- superfamilies[!superfamilies %in% c("helitron", "long_terminal_repeat", "repeat_fragment", "repeat_region", "target_site_duplication", "Tc1_Mariner_TIR_transposon")]
+superfamilies <- superfamilies[!superfamilies %in% c("helitron", "long_terminal_repeat", "repeat_fragment", "repeat_region", "target_site_duplication", "rRNA_gene")]
 
 
 
@@ -98,7 +98,7 @@ for (i in seq_along(superfamilies)) {
 circos.genomicDensity(
   filter_superfamily(gene_annotation, "gene", custom_ideogram),
   count_by = "number",
-  col = "darkgreen",
+  col = colors[11],
   track.height = 0.07,
   window.size = 1e5
 )
