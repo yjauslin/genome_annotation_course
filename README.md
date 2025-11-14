@@ -30,13 +30,17 @@ Please be aware that you may need to change some of the file paths to fit your f
 - **[15_createGENESPACEFiles.sh](scripts/15_createGENESPACEFiles.sh)**: prepares and creates files and correct folder structure to run GENESPACE in the next step.
 - **[16a_runGENESPACE.sh](scripts/16a_runGENESPACE.sh)**: runs 16b_runGENESPACE.R in a container to compare different genomes.
 - **[16b_runGENESPACE.R](scripts/16b_runGENESPACE.R)**: Uses GENESPACE to identify orthogroups, orthologues and to extract syntenic regions from various genomes.
+- **[16c_process_pangenome.R](scripts/16c_process_pangenome.R)**: Uses the pangenomematrix created by GENESPACE in 16a/b to extract data like genes in core of the accession, unique genes in the accession and visualizes the pangenome.
 
 ### plots/
-- **[01_LTR_Copia_Gypsy_cladelevel.pdf](plots/01_LTR_Copia_Gypsy_cladelevel.pdf)**
-- **[01_LTR_Copia_Gypsy_cladelevel.png](plots/01_LTR_Copia_Gypsy_cladelevel.png)**
-- **[02_TE_density_clades.pdf](plots/02_TE_density_clades.pdf)**
-- **[02_TE_density.pdf](plots/02_TE_density.pdf)**
-- **[04_te_landscape_plot.pdf](plots/04_te_landscape_plot.pdf)**
+- **[01_LTR_Copia_Gypsy_cladelevel.pdf](plots/01_LTR_Copia_Gypsy_cladelevel.pdf)**: Histograms of the abundance of Copia and Gypsy clades in the genome in pdf format.
+- **[01_LTR_Copia_Gypsy_cladelevel.png](plots/01_LTR_Copia_Gypsy_cladelevel.png)**: Histograms of the abundance of Copia and Gypsy clades in the genome in png format.
+- **[02_TE_density_clades.pdf](plots/02_TE_density_clades.pdf)**: Circos plot of Athila and CRM TEs marking their position in the assembly.
+- **[02_TE_density.pdf](plots/02_TE_density.pdf)**: Circos plot showing the positions of various superfamilies in the assembly.
+- **[04_te_landscape_plot.pdf](plots/04_te_landscape_plot.pdf)**: Landscape-plot of TEs showing how recently they inserted into the accessions genome.
+- **[12_busco_figure.png](plots/12_busco_figure.png)**: BUSCO-plot of the longest peptide sequences of the annotation.
+- **[16_TAIR10_bp.rip.pdf](plots/16_TAIR10_bp.rip.pdf)**: Riparian-plot comparing the genome of the accession with three different accessions and the TAIR10-database.
+- **[16_pangenome_frequency_plot.pdf](plots/16_pangenome_frequency_plot.pdf)**: Visualizes number of genes and pangenome of the five different genomes.
   
 ## Dependencies
 
