@@ -78,3 +78,4 @@ BiocManager::install(version = "3.22")).
 - dplyr
 - reshape2
 - GENESPACE (provided in Container)
+- tibble
