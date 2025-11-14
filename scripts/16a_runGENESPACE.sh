@@ -7,10 +7,13 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/GENESPACE_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/GENESPACE_%j.err
 
+#save course- and working directory as variables
 COURSEDIR="/data/courses/assembly-annotation-course/CDS_annotation" 
 WORKDIR=/data/users/${USER}/genome_annotation_course
 
-chmod u+x $WORKDIR/scripts/16b_prepareGENESPACE.R
+#add  permissions to execute 16b_runGENESPACE.R
+chmod u+x $WORKDIR/scripts/16b_runGENESPACE.R
 
+#run genespace through 16b_runGENESPACE.R
 apptainer exec --bind $COURSEDIR --bind $WORKDIR --bind $SCRATCH:/temp --bind /data \
     $COURSEDIR/containers/genespace_latest.sif Rscript $WORKDIR/scripts/16b_runGENESPACE.R $WORKDIR/results/genespace

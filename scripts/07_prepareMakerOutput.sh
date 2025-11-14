@@ -7,10 +7,10 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/MakerOutput_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/MakerOutput_%j.err 
 
-COURSEDIR="/data/courses/assembly-annotation-course/CDS_annotation" 
+#move to input directory
+cd /data/users/${USER}/genome_annotation_course/annotation
 
-cd /data/users/yjauslin/genome_annotation_course/annotation
-
+#convert maker resultfiles to gff format
 MAKERBIN="$COURSEDIR/softwares/Maker_v3.01.03/src/bin" 
    $MAKERBIN/gff3_merge -s -d ERR11437318.bp.p_ctg.maker.output/ERR11437318.bp.p_ctg_master_datastore_index.log > assembly.all.maker.gff 
    $MAKERBIN/gff3_merge -n -s -d ERR11437318.bp.p_ctg.maker.output/ERR11437318.bp.p_ctg_master_datastore_index.log > assembly.all.maker.noseq.gff 

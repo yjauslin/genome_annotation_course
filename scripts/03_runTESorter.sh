@@ -12,8 +12,10 @@ WORKDIR=/data/users/${USER}/genome_annotation_course
 CONTAINER=/data/courses/assembly-annotation-course/CDS_annotation/containers/TEsorter_1.3.0.sif
 GENOME=/data/users/${USER}/genome_annotation_course/results/EDTA_annotation/ERR11437318.bp.p_ctg.fa.mod.EDTA.TElib.fa
 
+#move to input directory
 cd $WORKDIR/results/TE_classification
 
+#load SeqKit module
 module load SeqKit/2.6.1
 
 #Extract Copia sequences
@@ -22,6 +24,8 @@ seqkit grep -r -p "Copia" $GENOME > Copia_sequences.fa
 #Extract Gypsy sequences
 seqkit grep -r -p "Gypsy" $GENOME > Gypsy_sequences.fa
 
+#run TEsorter on Copia sequences
 apptainer exec --bind /data $CONTAINER TEsorter Copia_sequences.fa -db rexdb-plant
 
+#run TEsorter on Gypsy sequences
 apptainer exec --bind /data $CONTAINER TEsorter Gypsy_sequences.fa -db rexdb-plant

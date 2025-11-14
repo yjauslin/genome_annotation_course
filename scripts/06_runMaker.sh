@@ -8,17 +8,22 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/maker_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/maker_%j.err 
 
+#save course- and working-directory as variables 
 COURSEDIR="/data/courses/assembly-annotation-course/CDS_annotation" 
 WORKDIR="/data/users/${USER}/genome_annotation_course/annotation" 
 
+#move to working directory
 cd $WORKDIR
 
+#save path to repeatmasker and export repeatmasker
 REPEATMASKER_DIR="/data/courses/assembly-annotation-course/CDS_annotation/softwares/RepeatMasker" 
 export PATH=$PATH:"/data/courses/assembly-annotation-course/CDS_annotation/softwares/RepeatMasker" 
 
+#load database modules OpenMPI and AUGUSTUS
 module load OpenMPI/4.1.1-GCC-10.3.0 
 module load AUGUSTUS/3.4.0-foss-2021a 
 
+#run maker to annotate the assembly
 mpiexec --oversubscribe -n 50 apptainer exec \
  --bind $SCRATCH:/TMP --bind $COURSEDIR --bind $AUGUSTUS_CONFIG_PATH --bind $REPEATMASKER_DIR --bind /data \
   ${COURSEDIR}/containers/MAKER_3.01.03.sif \

@@ -7,11 +7,15 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/controlfile_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/controlfile_%j.err 
 
+#save working- and container-directory as variables
 WORKDIR=/data/users/${USER}/genome_annotation_course/annotation
 CONTAINER=/data/courses/assembly-annotation-course/CDS_annotation/containers/MAKER_3.01.03.sif
 
+#create working directory
 mkdir -p $WORKDIR 
 
+#move to working directory
 cd $WORKDIR
 
+#run maker to create ccontrol file
 apptainer exec --bind /data $CONTAINER maker -CTL

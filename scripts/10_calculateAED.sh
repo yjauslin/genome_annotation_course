@@ -7,14 +7,19 @@
 #SBATCH --output=/data/users/yjauslin/genome_annotation_course/logs/AED_%j.out 
 #SBATCH --error=/data/users/yjauslin/genome_annotation_course/logs/AED_%j.err 
 
+#save important directories as variables
 WORKDIR=/data/users/${USER}/genome_annotation_course
 COURSEDIR="/data/courses/assembly-annotation-course/CDS_annotation" 
 MAKERBIN="$COURSEDIR/softwares/Maker_v3.01.03/src/bin" 
 
+#save input file as variable
 gff=assembly.all.maker.noseq.gff
 
+#move to input directory
 cd $WORKDIR/results/final
 
+#update gff file with the results of InterProScan
     $MAKERBIN/ipr_update_gff ${gff}.renamed.gff output.iprscan > assembly.all.maker.noseq.renamed.iprscan.gff     
 
+#calculate AED
 perl $MAKERBIN/AED_cdf_generator.pl -b 0.025 ${gff}.renamed.gff > assembly.all.maker.renamed.gff.AED.txt 

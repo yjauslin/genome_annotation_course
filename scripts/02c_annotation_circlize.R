@@ -61,6 +61,7 @@ circos.genomicInitialize(custom_ideogram)
 #circos.genomicDensity(filter_superfamily(gff_data, "Gypsy_LTR_retrotransposon", custom_ideogram), count_by = "number", col = "darkgreen", track.height = 0.07, window.size = 1e5)
 #circos.genomicDensity(filter_superfamily(gff_data, "Copia_LTR_retrotransposon", custom_ideogram), count_by = "number", col = "darkred", track.height = 0.07, window.size = 1e5)
 
+#create vector of colors
 colors <- c(
   "red",
   "blue",
@@ -83,7 +84,7 @@ superfamilies <- superfamilies[!superfamilies %in% c("helitron", "long_terminal_
 
 
 
-
+# loop over superfamilies and display their positions in the genome using genomicDensity
 for (i in seq_along(superfamilies)) {
   sf <- superfamilies[i]
   circos.genomicDensity(
@@ -95,6 +96,7 @@ for (i in seq_along(superfamilies)) {
   )
 }
 
+# add gene track to the plot
 circos.genomicDensity(
   filter_superfamily(gene_annotation, "gene", custom_ideogram),
   count_by = "number",
@@ -106,6 +108,7 @@ circos.genomicDensity(
 
 circos.clear()
 
+# create legend and add it to the bottom left of the plot
 lgd <- Legend(
     title = "Superfamily", at = c(superfamilies, "genes"),
     legend_gp = gpar(fill = colors[1:11])
@@ -128,20 +131,30 @@ extract_id <- function(line) {
 
 gff_data$id <- sapply(gff_data$V9, extract_id)
 
+# read in tsv-file
 tsv_file = "Gypsy_sequences.fa.cp.rexdb-plant.cls.tsv"
 tsv_data = read.table(tsv_file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 
+# extract tje ID from sTE column
 tsv_data$id <- substr(tsv_data$sTE, 1, 11)
 
+# filter out clades Athila and CRM
 clade_data <- tsv_data %>%
   filter(Clade == "Athila" | Clade == "CRM") %>%
   select(id, Clade)
 
+# create new data frame
 new_data <- data.frame()
+
+# initialize clades vector
 clades <- c()
 
+# loop over id in gff_data
 for(i in seq_along(gff_data$id)){
+  # loop over id in clade_data
   for(j in seq_along(clade_data$id)){
+    # if the two ids match in both datasets bind them to new data
+    # add the respective clade of matching ids to clades vector
     if(clade_data$id[j] == gff_data$id[i]){
       new_data <- rbind(new_data, gff_data[i,])
       clades <- c(clades, clade_data$Clade[j])
@@ -149,8 +162,10 @@ for(i in seq_along(gff_data$id)){
   }
 }
 
+# add clades vector as new column of new_data
 new_data$clades <- clades
 
+# create function to filter by clade in new_data
 filter_clades <- function(new_data, clade, custom_ideogram) {
   filtered_data <- new_data[new_data$clades == clade, ] %>%
     as.data.frame() %>%
@@ -166,11 +181,13 @@ circos.par(start.degree = 90, gap.after = 1, track.margin = c(0, 0), gap.degree 
 # Initialize the circos plot with the custom ideogram
 circos.genomicInitialize(custom_ideogram)
 
+# add track for CRM and Athila clades to the plot
 circos.genomicDensity(filter_clades(new_data, "CRM", custom_ideogram), count_by = "number", col = "darkblue", track.height = 0.07, window.size = 1e5)
 circos.genomicDensity(filter_clades(new_data, "Athila", custom_ideogram), count_by = "number", col = "darkred", track.height = 0.07, window.size = 1e5)
 
 circos.clear()
 
+# add legend to the plot
 lgd <- Legend(
   title = "Clades", at = c("CRM", "Athila"),
   legend_gp = gpar(fill = c("darkblue", "darkred"))
