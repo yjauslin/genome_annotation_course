@@ -1,10 +1,12 @@
 library(tidyverse)
 library(readr)
 library(dplyr)
+library(ggplot2)
+library(tidyr)
 # -----------------
 # 0) Inputs
 # -----------------
-wd <- "C:/Users/Yannick/OneDrive - Universitaet Bern/Master/Genome_Annotation" # set your working directory where the pangenome_matrix.rds is located
+wd <- "C:/Users/yanni/OneDrive - Universitaet Bern/Master/Genome_Annotation" # set your working directory where the pangenome_matrix.rds is located
 focal_genome <- "Hiroshima" # Your focal accession name
 pangenome <- readRDS(file.path(wd, "pangenome_matrix.rds"))
 
@@ -148,6 +150,63 @@ gene_by_cat <- gene_counts_w_cat %>%
   group_by(genome, category) %>%
   summarise(gene_count = sum(gene_count), .groups = "drop")
 
+# Define the columns for which to calculate the sum.
+columns_to_sum <- c("Etna_2", "Ice_1", "Hiroshima", "TAIR10", "Taz_0")
+
+# calculate total orthogroups per genome (sum orthogroup counts by category)
+og_by_cat <- pg_flags %>%
+  group_by(category) %>%
+  summarise(
+    # Use across() to apply the sum function to multiple columns dynamically.
+    # .names = "sum_{.col}" creates new column names like "sum_Etna_2".
+    across(all_of(columns_to_sum), sum, .names = "sum_{.col}")
+  ) %>%
+  pivot_longer(
+    cols = starts_with("sum_"), # Selects all columns that start with "sum_"
+    names_to = "genome",        # Creates a new column named 'genome' for the original column names
+    values_to = "orthogroup_count"    # Creates a new column named 'orthogroup_count' for the sum values
+  ) %>%
+  mutate(
+    genome = sub("sum_", "", genome) # Remove the "sum_" prefix from the 'genome' names
+  ) %>%
+  arrange(genome, category)
+
+# Combine gene_by_cat with og_by_cat
+combined_df <- full_join(gene_by_cat, og_by_cat, by = c("genome", "category"))
+
+# Reshape the data from wide to long format
+data_long <- combined_df %>%
+  pivot_longer(cols = c(gene_count, orthogroup_count),
+               names_to = "count_type",
+               values_to = "count_value")
+
+# This ensures 'core' is at the bottom, then 'accessory', then 'species_specific'
+# and 'gene_count' facet appears before 'orthogroup_count'
+data_long$category <- factor(data_long$category, levels = c("species_specific", "accessory", "core"))
+data_long$count_type <- factor(data_long$count_type, levels = c("gene_count", "orthogroup_count"))
+
+color_scheme <- c("#88CCEE", "#DDCCEE", "#332288") # Cyan, Pale purple, Dark blue
+
+# plot the data
+ggplot(data_long, aes(x = genome, y = count_value, fill = category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~ count_type, ncol = 2, scales = "fixed") +
+  scale_fill_manual(values = color_scheme) + # Apply the custom color palette here
+  labs(
+    title = "",
+    x = "Genome",
+    y = "Count",
+    fill = "Category"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1), # Rotate x-axis labels for readability
+    plot.title = element_text(hjust = 0.5) # Center the plot title
+  )
+
+ggsave(file.path(wd, "plots/16a_pangenome_frequency_plot.pdf"), width = 10, height = 6)
+
+print(stacked_barplot)
 # Total genes per genome (sum across all categories)
 gene_totals <- gene_by_cat %>%
   group_by(genome) %>%
@@ -230,7 +289,7 @@ ggplot(freq_data, aes(x = n_present, y = count, fill = type)) +
     plot.title = element_text(face = "bold")
   )
 
-ggsave(file.path(wd, "plots/16_pangenome_frequency_plot.pdf"), width = 10, height = 6)
+ggsave(file.path(wd, "plots/16b_pangenome_frequency_plot.pdf"), width = 10, height = 6)
 
 # Summary table
 freq_summary <- freq_data %>%

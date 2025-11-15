@@ -40,7 +40,8 @@ Please be aware that you may need to change some of the file paths to fit your f
 - **[04_te_landscape_plot.pdf](plots/04_te_landscape_plot.pdf)**: Landscape-plot of TEs showing how recently they inserted into the accessions genome.
 - **[12_busco_figure.png](plots/12_busco_figure.png)**: BUSCO-plot of the longest peptide sequences of the annotation.
 - **[16_TAIR10_bp.rip.pdf](plots/16_TAIR10_bp.rip.pdf)**: Riparian-plot comparing the genome of the accession with three different accessions and the TAIR10-database.
-- **[16_pangenome_frequency_plot.pdf](plots/16_pangenome_frequency_plot.pdf)**: Visualizes number of genes and orthogroups of the five different genomes.
+- **[16a_pangenome_frequency_plot.pdf](plots/16a_pangenome_frequency_plot.pdf)**: Stacked barplot showing number of core, accessory and specific genes and orthogroups for the five different genomes
+- **[16b_pangenome_frequency_plot.pdf](plots/16b_pangenome_frequency_plot.pdf)**: Visualizes number of genes and orthogroups of the five different genomes.
   
 ## Dependencies
 
