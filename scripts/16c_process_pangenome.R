@@ -104,7 +104,7 @@ pg_flags <- presence_tbl %>%
   mutate(
     category = case_when(
       is_core_all ~ "core",
-      n_present == 1 ~ "species_specific",
+      n_present == 1 ~ "accession_specific",
       TRUE ~ "accessory"
     )
   )
@@ -182,7 +182,7 @@ data_long <- combined_df %>%
 
 # This ensures 'core' is at the bottom, then 'accessory', then 'species_specific'
 # and 'gene_count' facet appears before 'orthogroup_count'
-data_long$category <- factor(data_long$category, levels = c("species_specific", "accessory", "core"))
+data_long$category <- factor(data_long$category, levels = c("accession_specific", "accessory", "core"))
 data_long$count_type <- factor(data_long$count_type, levels = c("gene_count", "orthogroup_count"))
 
 color_scheme <- c("#88CCEE", "#DDCCEE", "#332288") # Cyan, Pale purple, Dark blue
@@ -206,7 +206,6 @@ ggplot(data_long, aes(x = genome, y = count_value, fill = category)) +
 
 ggsave(file.path(wd, "plots/16a_pangenome_frequency_plot.pdf"), width = 10, height = 6)
 
-print(stacked_barplot)
 # Total genes per genome (sum across all categories)
 gene_totals <- gene_by_cat %>%
   group_by(genome) %>%
@@ -218,7 +217,7 @@ gene_counts_per_genome <- gene_by_cat %>%
   rename(
     gene_core = core,
     gene_accessory = accessory,
-    gene_specific = species_specific
+    gene_specific = accession_specific
   ) %>%
   left_join(gene_totals, by = "genome") %>%
   mutate(
@@ -297,7 +296,7 @@ freq_summary <- freq_data %>%
   mutate(
     label = case_when(
       n_present == n_genomes ~ "Core (all genomes)",
-      n_present == 1 ~ "Species-specific (1 genome)",
+      n_present == 1 ~ "Accession-specific (1 genome)",
       TRUE ~ paste0("Shared (", n_present, " genomes)")
     )
   ) %>%
